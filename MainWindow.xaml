@@ -1,0 +1,83 @@
+﻿<Window x:Class="WPFSingleBorderWindowNoChrome.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="450"
+        Title="MainWindow"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow">
+  <DockPanel LastChildFill="True">
+    <DockPanel x:Name="NonClientArea"
+               DockPanel.Dock="Top"
+               Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+               HorizontalAlignment="Stretch"
+               LastChildFill="False"
+               TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+               MouseDown="TitleBar_MouseDown">
+      <TextBlock DockPanel.Dock="Left"
+                 IsHitTestVisible="False"
+                 Margin="8,0,0,0"
+                 Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}"
+                 VerticalAlignment="Center" />
+      <StackPanel DockPanel.Dock="Right"
+                  Orientation="Horizontal">
+        <Button Height="24"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Width="24"
+                Click="MaximizeRestoreButton_Click">
+          <Path Fill="{Binding (TextElement.Foreground), RelativeSource={RelativeSource AncestorType=Button}}"
+                Height="16"
+                Width="16">
+            <Path.Style>
+              <Style TargetType="Path">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
+                    <Setter Property="Data" Value="F1M12,12L4,12 4,4 12,4z M3,13L13,13 13,3 3,3z" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                    <Setter Property="Data" Value="F1M11.999,10.002L10.998,10.002 10.998,5.002 5.998,5.002 5.998,4.001 11.999,4.001z M10.002,11.999L4.001,11.999 4.001,5.998 10.002,5.998z M5.002,3L5.002,5.002 3,5.002 3,13 10.998,13 10.998,10.998 13,10.998 13,3z" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Path.Style>
+          </Path>
+          <Button.Style>
+            <Style TargetType="Button">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
+                  <Setter Property="ToolTip" Value="Maximize" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                  <Setter Property="ToolTip" Value="Restore" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Style>
+        </Button>
+        <Button Height="24"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                ToolTip="Close"
+                Width="24"
+                Click="CloseButton_Click">
+          <Path Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
+                Fill="{Binding (TextElement.Foreground), RelativeSource={RelativeSource AncestorType=Button}}"
+                Height="16"
+                Width="16" />
+        </Button>
+      </StackPanel>
+    </DockPanel>
+    <DockPanel DockPanel.Dock="Bottom"
+               Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"
+               HorizontalAlignment="Stretch"
+               LastChildFill="False"
+               TextElement.Foreground="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}">
+      <TextBlock DockPanel.Dock="Left"
+                 Margin="8,4,0,4"
+                 Text="Ready"
+                 VerticalAlignment="Center" />
+    </DockPanel>
+    <ContentControl DockPanel.Dock="Bottom" />
+  </DockPanel>
+</Window>
